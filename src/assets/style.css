@@ -3,11 +3,12 @@
 }
 
 body {
-    background-color: slategray;
+    background-color: darkslateblue;
 
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
     /* font-family: 'Saira Stencil One', cursive; */
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    color: orange;
 }
 
 a {
