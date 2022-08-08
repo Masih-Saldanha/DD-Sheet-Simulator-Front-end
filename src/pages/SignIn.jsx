@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import useAuth from "../hooks/useAuth";
-import authRequest from "../services/authRequest";
+import authHook from "../hooks/authHook";
+import authService from "../services/authService";
 
 export default function SignIn() {
-  const { signIn, token } = useAuth();
+  const { signIn, token } = authHook();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function SignIn() {
   function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    authRequest
+    authService
       .signIn(signInData)
       .then((response) => {
         setLoading(false);

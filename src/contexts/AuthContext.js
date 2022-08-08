@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const AuthContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "dd-sheet-simulator-token";
-const persistedToken = localStorage.getItem(LOCAL_STORAGE_KEY);
+export const persistedToken = localStorage.getItem(LOCAL_STORAGE_KEY);
 
 export function AuthProvider({ children }) {
     const [token, setToken] = useState(persistedToken);

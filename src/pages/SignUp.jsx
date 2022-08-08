@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import authRequest from "../services/authRequest";
+import authService from "../services/authService";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function SignUp() {
     if (userData.userPicture.length < 1) {
         delete metaUserData.userPicture
     }
-    authRequest
+    authService
       .signUp(metaUserData)
       .then((response) => {
         alert("Account Created");
