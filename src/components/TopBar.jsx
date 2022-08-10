@@ -6,33 +6,52 @@ import { BiUserCircle } from "react-icons/bi";
 import characterHook from "../hooks/characterHook";
 import authService from "../services/authService";
 import characterService from "../services/characterService";
+import authHook from "../hooks/authHook";
 
 export default function TopBar() {
   const navigate = useNavigate();
+  const { signOut, token } = authHook();
   const { characterList, setCharacterList } = characterHook();
   let decodedToken = authService.returnDecodedToken();
+  if (!decodedToken) decodedToken = { userName: "", userPicture: "" };
 
   useEffect(() => {
-    characterService
-      .getUserCharactersList()
-      .then((response) => {
-        setCharacterList(response.data);
-      })
-      .catch((e) => {
-        alert(e.response.data.error || e.response.data);
-        console.log("deu ruim");
-      });
+    if (!token) {
+      navigate("/");
+    } else {
+      characterService
+        .getUserCharactersList()
+        .then((response) => {
+          setCharacterList(response.data);
+        })
+        .catch((e) => {
+          alert(e.response.data.error || e.response.data);
+          console.log("deu ruim");
+        });
+    }
   }, []);
 
-  function handleOption(e) {
+  function handleCharacter(e) {
     console.log(e.target.value);
     navigate(`/char/${e.target.value}`);
+  }
+
+  // TODO: FAZER ROTA PARA DADOS
+  function handleData(e) {
+    console.log(e.target.value);
+    navigate(`/data/${e.target.value}`);
+  }
+
+  function handleSignOut(e) {
+    console.log(e.target.value);
+    signOut();
+    navigate("/");
   }
 
   return (
     <Menu>
       <select
-        onChange={handleOption}
+        onChange={handleCharacter}
         name="Your Characters"
         id="Your Characters"
       >
@@ -48,9 +67,22 @@ export default function TopBar() {
           );
         })}
       </select>
-      <h1>Data</h1>
+      <select onChange={handleData} name="Data" id="Data">
+        <option hidden value="default">
+          Data
+        </option>
+        <option value="races">Races</option>
+        <option value="classes">Classes</option>
+        <option value="magics">Magics</option>
+      </select>
       <section>
-        <h1>{decodedToken.userName}</h1>
+        <select onChange={handleSignOut} name="Data" id="Data">
+          <option hidden value="default">
+            {decodedToken.userName}
+          </option>
+          <option value="signout">Signout</option>
+        </select>
+        {/* <h1>{decodedToken.userName}</h1> */}
         {decodedToken.userPicture ? (
           <img src={decodedToken.userPicture} />
         ) : (
