@@ -17,13 +17,18 @@ const config = {
     }
 };
 
-const decodedToken = jwt_decode(persistedToken);
+function returnDecodedToken() {
+    if (!persistedToken) {
+        return null;
+    };
+    return jwt_decode(persistedToken);
+}
 
 const authService = {
     signUp,
     signIn,
     config,
-    decodedToken,
+    returnDecodedToken,
 };
 
 export default authService;

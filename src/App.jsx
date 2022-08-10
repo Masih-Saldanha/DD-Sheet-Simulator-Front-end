@@ -14,6 +14,8 @@ export default function App() {
             <Route exact path="/" element={<SignIn />}></Route>
             <Route exact path="/signup" element={<SignUp />}></Route>
             <Route exact path="/home" element={<Home />}></Route>
+            {/* TODO: CRIAR PAGE QUE RENDERIZA DADOS A PARTIR DO :id */}
+            <Route exact path="/char/:id" element={<Home />}></Route>
           </Routes>
         </BrowserRouter>
       </CharacterProvider>
