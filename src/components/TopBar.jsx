@@ -50,13 +50,14 @@ export default function TopBar() {
 
   return (
     <Menu>
+      <h1 onClick={() => navigate("/home")}>New char</h1>
       <select
         onChange={handleCharacter}
         name="Your Characters"
         id="Your Characters"
       >
         <option hidden value="default">
-          Your Characters
+          Your char
         </option>
         {characterList.map((char) => {
           const { id, charName } = char;
@@ -99,12 +100,16 @@ const Menu = styled.menu`
   justify-content: space-around;
   align-items: center;
   padding: 10px;
+  select {
+    width: 80px;
+    margin-left: 10px;
+  }
   section {
     /* border: 1px solid #ffffff; */
     display: flex;
     align-items: center;
-    h1 {
-      padding-right: 10px;
+    select {
+      margin-right: 10px;
     }
   }
 `;
