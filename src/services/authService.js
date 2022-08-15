@@ -13,23 +13,23 @@ function signIn(signInData) {
     return axios.post(`${REACT_APP_API_BASE_URL}/signin`, signInData);
 };
 
-const config = {
-    headers: {
-        Authorization: `Bearer ${persistedToken}`
-    }
-};
+// const config = {
+//     headers: {
+//         Authorization: `Bearer ${persistedToken}`
+//     }
+// };
 
-function returnDecodedToken() {
-    if (!persistedToken) {
+function returnDecodedToken(token) {
+    if (!token) {
         return null;
     };
-    return jwt_decode(persistedToken);
+    return jwt_decode(token);
 }
 
 const authService = {
     signUp,
     signIn,
-    config,
+    // config,
     returnDecodedToken,
     REACT_APP_API_BASE_URL,
 };

@@ -2,12 +2,19 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import TopBar from "../components/TopBar";
+import authHook from "../hooks/authHook";
 import characterHook from "../hooks/characterHook";
 import characterService from "../services/characterService";
 // import characterHook from "../hooks/characterHook";
 
 export default function Home() {
+  const { token } = authHook();
   const { characterList, setCharacterList } = characterHook();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   const classes = [
     { classId: 1, className: "Barbarian", class: "barbarian" },
@@ -163,7 +170,7 @@ export default function Home() {
     }
 
     characterService
-      .createCharacter(dataToSend)
+      .createCharacter(dataToSend, config)
       .then((response) => {
         setLoading(false);
         setCharacterList([

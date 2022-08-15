@@ -6,9 +6,16 @@ import characterService from "../services/characterService";
 import TopBar from "../components/TopBar";
 import styled from "styled-components";
 import APIService from "../services/APIService";
+import authHook from "../hooks/authHook";
 
 export default function CharSheet() {
   const { id } = useParams();
+  const { token } = authHook();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   const [characterData, setCharacterData] = useState({
     id: 0,
@@ -96,7 +103,7 @@ export default function CharSheet() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await characterService.getCharacterData(id);
+        const response = await characterService.getCharacterData(id, config);
         setCharacterData(response.data);
 
         const { data: raceAPIData } = await APIService.getAPIData(
@@ -137,7 +144,7 @@ export default function CharSheet() {
             const { data: classAPI } = await APIService.getAPIData(
               `${actualClass.url_API}/${i}`
             );
-            console.log(classAPI);
+            // console.log(classAPI);
           }
         });
         // console.log(classesAPI);
@@ -299,7 +306,7 @@ export default function CharSheet() {
 
       <DataBlock>
         <h1>Total Level: {charTotalLevel}</h1>
-        <h1>Max HP: {charMaxHP}</h1>
+        {/* <h1>Max HP: {charMaxHP}</h1> */}
       </DataBlock>
     </>
   );

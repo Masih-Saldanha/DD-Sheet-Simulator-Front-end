@@ -34,7 +34,7 @@ export default function SignIn() {
         setLoading(false);
         signIn(response.data);
         navigate("/home");
-        console.log(response.data)
+        // console.log(response.data)
       })
       .catch((e) => {
         setLoading(false);

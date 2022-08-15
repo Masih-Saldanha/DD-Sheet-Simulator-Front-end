@@ -12,17 +12,29 @@ export default function TopBar() {
   const navigate = useNavigate();
   const { signOut, token } = authHook();
   const { characterList, setCharacterList } = characterHook();
-  let decodedToken = authService.returnDecodedToken();
+  let decodedToken = authService.returnDecodedToken(token);
   if (!decodedToken) decodedToken = { userName: "", userPicture: "" };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const [userData, setUserData] = useState({ userName: "", userPicture: "" });
+  // console.log("teste");
 
   useEffect(() => {
     if (!token) {
       navigate("/");
     } else {
+      setUserData(decodedToken);
+      // console.log(token);
+      // console.log(decodedToken);
       characterService
-        .getUserCharactersList()
+        .getUserCharactersList(config)
         .then((response) => {
           setCharacterList(response.data);
+          // console.log(response.data);
         })
         .catch((e) => {
           alert(e.response.data.error || e.response.data);
@@ -32,18 +44,18 @@ export default function TopBar() {
   }, []);
 
   function handleCharacter(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     navigate(`/char/${e.target.value}`);
   }
 
   // TODO: FAZER ROTA PARA DADOS
   function handleData(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     navigate(`/data/${e.target.value}`);
   }
 
   function handleSignOut(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     signOut();
     navigate("/");
   }
@@ -68,6 +80,7 @@ export default function TopBar() {
           );
         })}
       </select>
+
       <select onChange={handleData} name="Data" id="Data">
         <option hidden value="default">
           Data
@@ -76,16 +89,17 @@ export default function TopBar() {
         <option value="classes">Classes</option>
         <option value="magics">Magics</option>
       </select>
+
       <section>
         <select onChange={handleSignOut} name="Data" id="Data">
           <option hidden value="default">
-            {decodedToken.userName}
+            {userData.userName}
           </option>
           <option value="signout">Signout</option>
         </select>
         {/* <h1>{decodedToken.userName}</h1> */}
-        {decodedToken.userPicture ? (
-          <img src={decodedToken.userPicture} />
+        {userData.userPicture ? (
+          <img src={userData.userPicture} />
         ) : (
           <BiUserCircle color="#FFFFFF" size={50} />
         )}
