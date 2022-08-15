@@ -26,7 +26,7 @@ export default function TopBar() {
         })
         .catch((e) => {
           alert(e.response.data.error || e.response.data);
-          console.log("deu ruim");
+          console.log(e.response.data.error || e.response.data);
         });
     }
   }, []);
