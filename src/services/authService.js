@@ -3,12 +3,14 @@ import jwt_decode from "jwt-decode";
 
 import { persistedToken } from "../contexts/AuthContext";
 
+const REACT_APP_API_BASE_URL = "https://d-d-sheet-simulator.herokuapp.com"
+
 function signUp(signUpData) {
-    return axios.post(`${process.env.REACT_APP_API_BASE_URL}/signup`, signUpData);
+    return axios.post(`${REACT_APP_API_BASE_URL}/signup`, signUpData);
 };
 
 function signIn(signInData) {
-    return axios.post(`${process.env.REACT_APP_API_BASE_URL}/signin`, signInData);
+    return axios.post(`${REACT_APP_API_BASE_URL}/signin`, signInData);
 };
 
 const config = {
@@ -29,6 +31,7 @@ const authService = {
     signIn,
     config,
     returnDecodedToken,
+    REACT_APP_API_BASE_URL,
 };
 
 export default authService;
